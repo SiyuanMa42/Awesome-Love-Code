@@ -12,8 +12,9 @@ body {
   --height: 300;
   --width: 200;
   --depth: 150;
-  --drawerSize: calc((var(--height) / 3) - 10);
-  --drawerHole: calc((var(--height) - ((10 * 4) + (10 + 30))) / 3);
+  --layers: 5;
+  --drawerSize: calc((var(--height) / var(--layers)) - 10);
+  --drawerHole: calc((var(--height) - ((10 * 4) + (10 + 30))) / var(--layers));
 }
 .chest {
   height: calc(var(--height) * 1px);
@@ -136,17 +137,12 @@ body {
 .chest-drawer--bottom {
   transform: translate3d(0, 0, calc(var(--depth) * 0.51px));
 }
-.chest-drawer--top {
-  top: 5px;
-  z-index: 3;
-}
-.chest-drawer--middle {
-  top: calc((var(--drawerSize) + 10) * 1px);
-  z-index: 2;
-}
-.chest-drawer--bottom {
-  top: calc((var(--drawerSize) * 2 + 15) * 1px);
-  z-index: 1;
+.chest-drawer {
+  top: calc(
+    (var(--drawerSize) * (var(--layer-index) - 1) + 
+    (var(--layer-index) * 5)) * 1px
+  );
+  z-index: calc(var(--layers) - var(--layer-index) + 1);
 }
 .chest-drawer details,
 .chest-drawer summary {
